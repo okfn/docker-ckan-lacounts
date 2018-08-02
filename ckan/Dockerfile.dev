@@ -9,6 +9,7 @@ RUN pip install ipdb ipdbplugin
 # (Make sure to add the plugins to CKAN__PLUGINS in the .env file)
 # TODO: pin when possible
 RUN pip install -e git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics && \
+    # pip install -r https://raw.githubusercontent.com/ckan/ckanext-googleanalytics/master/requirements.txt && \
     pip install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages && \
     pip install -e git+https://github.com/ckan/ckanext-geoview.git@v0.0.13#egg=ckanext-geoview && \
     pip install -e git+https://github.com/ckan/ckanext-pdfview.git#egg=ckanext-pdfview && \
