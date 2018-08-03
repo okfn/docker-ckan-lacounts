@@ -15,6 +15,7 @@ RUN echo 'Installing extensions' && \
     # pages
     pip install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages && \
     # geoview
+    # TODO: rebase on ckan repo
     pip install -e git+https://github.com/roll/ckanext-geoview.git@#egg=ckanext-geoview && \
     # pdfview
     pip install -e git+https://github.com/ckan/ckanext-pdfview.git#egg=ckanext-pdfview && \
