@@ -18,6 +18,44 @@ services:
       - ./src:/srv/app/src_extensions
       - ckan_storage:/var/lib/ckan
 
+  harvest-gather:
+    build:
+      context: ckan/
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .dev.env
+    links:
+      - db
+      - redis
+    command:
+      - paster
+      - --plugin=ckanext-harvest
+      - harvester
+      - gather_consumer
+      - --config=$CKAN_INI
+    # TODO: proper healthcheck?
+    healthcheck:
+      disable: true
+
+  harvest-fetch:
+    build:
+      context: ckan/
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .dev.env
+    links:
+      - db
+      - redis
+    command:
+      - paster
+      - --plugin=ckanext-harvest
+      - harvester
+      - fetch_consumer
+      - --config=$CKAN_INI
+    # TODO: proper healthcheck?
+    healthcheck:
+      disable: true
+
   datapusher:
     container_name: datapusher
     build:

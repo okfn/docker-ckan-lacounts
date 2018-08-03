@@ -27,3 +27,6 @@ RUN echo 'Installing extensions' && \
     pip install -r https://raw.githubusercontent.com/ckan/ckanext-harvest/master/pip-requirements.txt && \
     # disqus
     pip install -e git+https://github.com/okfn/ckanext-disqus#egg=ckanext-disqus
+
+# Copy prerun hooks
+COPY docker-entrypoint.d/* /docker-entrypoint.d/
