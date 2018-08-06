@@ -1,0 +1,4 @@
+# An empty line is required at the end of this file for a valid cron file.
+* * * * * ckan /bin/echo 'Test!' >> /var/log/cron.log 2>&1
+* * * * * ckan /bin/paster --plugin=ckanext-harvest harvester run -c /srv/app/production.ini >> /var/log/cron.log 2>&1
+
