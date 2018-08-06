@@ -28,7 +28,7 @@ RUN echo 'Installing extensions' && \
     # disqus
     pip install -e git+https://github.com/okfn/ckanext-disqus#egg=ckanext-disqus
 
-# Copy setup files
-COPY cron.d/* /etc/cron.d/
+# Copy config files
+COPY crontabs/* /etc/crontabs/
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 COPY supervisor.d/* /etc/supervisord.d/
