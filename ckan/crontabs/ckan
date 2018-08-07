@@ -1,0 +1,2 @@
+# It will be run under the <filename> user
+* * * * * /usr/bin/paster --plugin=ckanext-harvest harvester run --config=/srv/app/production.ini
