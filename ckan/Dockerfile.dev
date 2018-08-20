@@ -9,6 +9,8 @@ RUN pip install ipdb ipdbplugin
 # (Make sure to add the plugins to CKAN__PLUGINS in the .env file)
 # TODO: pin when possible
 RUN echo 'Installing extensions' && \
+    # hierarchy
+    pip install -e git+https://github.com/okfn/ckanext-hierarchy.git#egg=ckanext-hierarchy && \
     # scheming
     pip install -e git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming && \
     pip install -r https://raw.githubusercontent.com/ckan/ckanext-scheming/master/requirements.txt && \
