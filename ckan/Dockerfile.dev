@@ -9,8 +9,6 @@ RUN pip install ipdb ipdbplugin
 # (Make sure to add the plugins to CKAN__PLUGINS in the .env file)
 # TODO: pin when possible
 RUN echo 'Installing extensions' && \
-    # hierarchy
-    pip install -e git+https://github.com/okfn/ckanext-hierarchy.git#egg=ckanext-hierarchy && \
     # scheming
     pip install -e git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming && \
     pip install -r https://raw.githubusercontent.com/ckan/ckanext-scheming/master/requirements.txt && \
@@ -22,14 +20,17 @@ RUN echo 'Installing extensions' && \
     pip install -r https://raw.githubusercontent.com/ckan/ckanext-googleanalytics/master/requirements.txt && \
     # disqus
     pip install -e git+https://github.com/ckan/ckanext-disqus#egg=ckanext-disqus && \
-    # lacounts
-    pip install -e git+https://github.com/okfn/ckanext-lacounts.git#egg=ckanext-lacounts && \
+    # hierarchy
+    pip install -e git+https://github.com/okfn/ckanext-hierarchy.git#egg=ckanext-hierarchy && \
     # showcase
     pip install -e git+https://github.com/okfn/ckanext-showcase.git#egg=ckanext-showcase && \
     # geoview
     pip install -e git+https://github.com/okfn/ckanext-geoview.git@#egg=ckanext-geoview && \
     # pdfview
     pip install -e git+https://github.com/okfn/ckanext-pdfview.git#egg=ckanext-pdfview
+
+# Install project extension
+RUN pip install -e git+https://github.com/okfn/ckanext-lacounts.git#egg=ckanext-lacounts
 
 # Copy config files
 COPY crontabs/* /etc/crontabs/
