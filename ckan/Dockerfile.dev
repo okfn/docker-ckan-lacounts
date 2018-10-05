@@ -19,7 +19,7 @@ RUN echo 'Installing extensions' && \
     pip install -e git+https://github.com/okfn/ckanext-socrata.git@2.0.1a#egg=ckanext-socrata && \
     pip install -r https://raw.githubusercontent.com/okfn/ckanext-socrata/master/requirements.txt && \
     # dcat harvester
-    pip install -e git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat && \
+    pip install -e git+https://github.com/ckan/ckanext-dcat.git@v0.0.8#egg=ckanext-dcat && \
     pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/master/requirements.txt && \
     # googleanalytics
     pip install -e git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics && \
