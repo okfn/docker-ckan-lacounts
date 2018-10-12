@@ -38,6 +38,13 @@ RUN echo 'Installing extensions' && \
 # Install project extension
 RUN pip install -e git+https://github.com/okfn/ckanext-lacounts.git#egg=ckanext-lacounts
 
+# Apply patches
+COPY patches ${APP_DIR}/patches
+RUN git config --global user.email "autopatcher@okfn.org" && \
+    git config --global user.name "autopatcher" && \
+    cd $SRC_DIR/ckan && \
+    for f in $APP_DIR/patches/ckan/*; do echo "$0: Applying patch $f"; git am "$f" ; done
+
 # Copy config files
 COPY crontabs/* /etc/crontabs/
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
