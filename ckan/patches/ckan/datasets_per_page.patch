@@ -1,5 +1,5 @@
 diff --git a/ckan/controllers/package.py b/ckan/controllers/package.py
-index fb28d93aa..38e178aa0 100644
+index fb28d93aa..78455f2eb 100644
 --- a/ckan/controllers/package.py
 +++ b/ckan/controllers/package.py
 @@ -148,11 +148,11 @@ class PackageController(base.BaseController):
@@ -7,12 +7,21 @@ index fb28d93aa..38e178aa0 100644
          page = h.get_page_number(request.params)
 
 -        limit = int(config.get('ckan.datasets_per_page', 20))
-+        limit = request.params.get('limit', int(config.get('ckan.datasets_per_page', 20)))
++        limit = int(request.params.get('limit', config.get('ckan.datasets_per_page', 20)))
 
          # most search operations should reset the page counter:
          params_nopage = [(k, v) for k, v in request.params.items()
 -                         if k != 'page']
-+                         if k not in ['page', 'limit']]
++                         if k in ['page', 'limit']]
 
          def drill_down_url(alternative_url=None, **by):
              return h.add_url_param(alternative_url=alternative_url,
+@@ -210,7 +210,7 @@ class PackageController(base.BaseController):
+             search_extras = {}
+             fq = ''
+             for (param, value) in request.params.items():
+-                if param not in ['q', 'page', 'sort'] \
++                if param not in ['q', 'page', 'limit', 'sort'] \
+                         and len(value) and not param.startswith('_'):
+                     if not param.startswith('ext_'):
+                         c.fields.append((param, value))
