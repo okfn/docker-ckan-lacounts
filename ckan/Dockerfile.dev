@@ -33,7 +33,9 @@ RUN echo 'Installing extensions' && \
     # geoview
     pip install -e git+https://github.com/okfn/ckanext-geoview.git@#egg=ckanext-geoview && \
     # pdfview
-    pip install -e git+https://github.com/okfn/ckanext-pdfview.git#egg=ckanext-pdfview
+    pip install -e git+https://github.com/okfn/ckanext-pdfview.git#egg=ckanext-pdfview  && \
+    # contact
+    pip install -e git+https://github.com/okfn/ckanext-contact.git@lacounts-0.1#egg=ckanext-contact
 
 # Install project extension
 RUN pip install -e git+https://github.com/okfn/ckanext-lacounts.git#egg=ckanext-lacounts
