@@ -1,0 +1,53 @@
+diff --git a/ckanext/harvest/logic/action/update.py b/ckanext/harvest/logic/action/update.py
+index e56648a..b52fa50 100644
+--- a/ckanext/harvest/logic/action/update.py
++++ b/ckanext/harvest/logic/action/update.py
+@@ -22,7 +22,8 @@ from ckan.plugins import toolkit
+ from ckan.logic import NotFound, check_access
+ 
+ from ckanext.harvest.plugin import DATASET_TYPE_NAME
+-from ckanext.harvest.queue import get_gather_publisher, resubmit_jobs
++from ckanext.harvest.queue import (
++    get_gather_publisher, resubmit_jobs, resubmit_objects)
+ 
+ from ckanext.harvest.model import HarvestSource, HarvestJob, HarvestObject
+ from ckanext.harvest.logic import HarvestJobExists
+@@ -563,6 +564,7 @@ def harvest_jobs_run(context, data_dict):
+ 
+     # resubmit old redis tasks
+     resubmit_jobs()
++    resubmit_objects()
+ 
+     return []  # merely for backwards compatibility
+
+diff --git a/ckanext/harvest/queue.py b/ckanext/harvest/queue.py
+index d211e88..a1760b6 100644
+--- a/ckanext/harvest/queue.py
++++ b/ckanext/harvest/queue.py
+@@ -137,6 +137,26 @@ def resubmit_jobs():
+             )
+             redis.delete(key)
+ 
++
++def resubmit_objects():
++    '''
++    Resubmit all WAITING objects on the DB that are not present in Redis
++    '''
++    if config.get('ckan.harvest.mq.type') != 'redis':
++        return
++    redis = get_connection()
++    publisher = get_fetch_publisher()
++
++    waiting_objects = model.Session.query(HarvestObject.id) \
++        .filter_by(state='WAITING') \
++        .all()
++
++    for object_id in waiting_objects:
++        if not redis.get(object_id):
++            log.debug('Sent {} to the fetch queue'.format(object_id[0]))
++            publisher.send({'harvest_object_id': object_id[0]})
++
++
+ class Publisher(object):
+     def __init__(self, connection, channel, exchange, routing_key):
+         self.connection = connection
