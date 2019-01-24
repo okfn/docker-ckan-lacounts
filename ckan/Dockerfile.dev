@@ -38,7 +38,10 @@ RUN echo 'Installing extensions' && \
     pip install -e git+https://github.com/okfn/ckanext-contact.git@lacounts-0.1#egg=ckanext-contact
 
 # Install project extension
-RUN pip install -e git+https://github.com/okfn/ckanext-lacounts.git#egg=ckanext-lacounts
+RUN pip install -e git+https://github.com/okfn/ckanext-lacounts.git#egg=ckanext-lacounts && \
+    pip install -r https://raw.githubusercontent.com/okfn/ckanext-lacounts/master/requirements.txt && \
+    python -m textblob.download_corpora && \
+    cp -r /root/nltk_data $APP_DIR
 
 # Apply patches
 COPY patches ${APP_DIR}/patches
